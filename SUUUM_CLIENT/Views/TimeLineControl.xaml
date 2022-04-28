@@ -1,0 +1,116 @@
+﻿<UserControl x:Class="SUUUM_CLIENT.Views.TimeLineControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:local="clr-namespace:SUUUM_CLIENT.Views"
+             xmlns:root="SUUUM_CLIENT.Views.MainWindow"
+             xmlns:item="clr-namespace:SUUUM_CLIENT.Item"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             Width="Auto"
+             Height="Auto"
+             x:Name="root">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolVisibilityConverter" />
+    </UserControl.Resources>
+    <ItemsControl ItemsSource="{Binding DataContext, ElementName=root,Mode=TwoWay}">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate  DataType="{x:Type item:Tweet}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <!--UserInfo-->
+                    <Image Source="{Binding UserImageURL}"
+                           Height="40"
+                           Width="40"
+                           VerticalAlignment="Top"
+                           Cursor="Hand" />
+                    <StackPanel Grid.Row="0"
+                                Grid.Column="1">
+                        <StackPanel Grid.Row="0"
+                                    Grid.Column="1"
+                                    Orientation="Horizontal">
+                            <TextBlock Text="{Binding UserName}" />
+                            <TextBlock Text="@" />
+                            <TextBlock Text="{Binding UserID}" />
+                        </StackPanel>
+                        <!--TweetText-->
+                        <TextBlock Text="{Binding Text}"
+                                   TextWrapping="Wrap" />
+                        <!--TweetMedia-->
+                        <Viewbox Stretch="Uniform">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Grid.Row="0">
+                                    <Image Source="{Binding ImageURL1}"
+                                           Cursor="Hand"
+                                           HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Stretch"
+                                           Visibility="{Binding HaveMedia1,Converter={StaticResource BoolVisibilityConverter}}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <prism:InvokeCommandAction Command="{Binding ShowImage1}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Image>
+                                    <Image Source="{Binding ImageURL2}"
+                                           Cursor="Hand"
+                                           HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Stretch"
+                                           Visibility="{Binding HaveMedia2,Converter={StaticResource BoolVisibilityConverter}}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <prism:InvokeCommandAction Command="{Binding ShowImage2}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Image>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Stretch"
+                                            Grid.Row="1">
+                                    <Image Source="{Binding ImageURL3}"
+                                           Cursor="Hand"
+                                           HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Stretch"
+                                           Visibility="{Binding HaveMedia3,Converter={StaticResource BoolVisibilityConverter}}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <prism:InvokeCommandAction Command="{Binding ShowImage3}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Image>
+                                    <Image Source="{Binding ImageURL4}"
+                                           Cursor="Hand"
+                                           HorizontalAlignment="Stretch"
+                                           VerticalAlignment="Stretch"
+                                           Visibility="{Binding HaveMedia4,Converter={StaticResource BoolVisibilityConverter}}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <prism:InvokeCommandAction Command="{Binding ShowImage4}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Image>
+                                </StackPanel>
+                            </Grid>
+                        </Viewbox>
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>
