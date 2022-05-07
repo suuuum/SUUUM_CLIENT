@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="SUUUM_CLIENT.Views.TweetDoc"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SUUUM_CLIENT.Views"
+             mc:Ignorable="d"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="800" d:DesignWidth="200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Command="{Binding Reload}">
+                <Image Source="D:\VS\SUUUM_CLIENT\SUUUM_CLIENT\Icon\リロードアイコン.png" />
+            </Button>
+            <Button>
+                <Image Source="D:\VS\SUUUM_CLIENT\SUUUM_CLIENT\Icon\write.png" />
+            </Button>
+            <ComboBox>
+            </ComboBox>
+        </StackPanel>
+        
+        <ScrollViewer Grid.Row="1">
+            <StackPanel>
+                <local:TimeLineControl DataContext="{Binding Items, Mode=TwoWay}" />
+                <Button Content="tuika"
+                        Command="{Binding AddTweets}" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

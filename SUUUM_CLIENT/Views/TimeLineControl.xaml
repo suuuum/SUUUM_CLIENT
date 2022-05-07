@@ -4,7 +4,7 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:local="clr-namespace:SUUUM_CLIENT.Views"
-             xmlns:root="SUUUM_CLIENT.Views.MainWindow"
+             xmlns:root="SUUUM_CLIENT.Views.tweet"
              xmlns:item="clr-namespace:SUUUM_CLIENT.Item"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              Width="Auto"
@@ -12,6 +12,7 @@
              x:Name="root">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolVisibilityConverter" />
+        
     </UserControl.Resources>
     <ItemsControl ItemsSource="{Binding DataContext, ElementName=root,Mode=TwoWay}">
         <ItemsControl.ItemTemplate>
@@ -38,13 +39,17 @@
                         <StackPanel Grid.Row="0"
                                     Grid.Column="1"
                                     Orientation="Horizontal">
-                            <TextBlock Text="{Binding UserName}" />
-                            <TextBlock Text="@" />
-                            <TextBlock Text="{Binding UserID}" />
+                            <TextBlock Text="{Binding UserName}" 
+                                       Foreground="AliceBlue"/>
+                            <TextBlock Text="@"
+                                       Foreground="Aqua" />
+                            <TextBlock Text="{Binding UserID}"
+                                       Foreground="AntiqueWhite"/>
                         </StackPanel>
                         <!--TweetText-->
                         <TextBlock Text="{Binding Text}"
-                                   TextWrapping="Wrap" />
+                                   TextWrapping="Wrap"
+                                   Foreground="MintCream"/>
                         <!--TweetMedia-->
                         <Viewbox Stretch="Uniform">
                             <Grid>

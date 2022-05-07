@@ -20,10 +20,11 @@ namespace SUUUM_CLIENT.Service
                 "1289495716541292548-ENhOyR8vI0EOSRzricMDZfW6cnkb2r",                  // Access token
                 "ssZe3EcivC6ztTyAZytAfcCwL3MBZtnu9z7EFK628ek1N");          // Access token secret
 
-        public MainWindowViewModel ViewModel { get; set; }
+        public TweetDocViewModel ViewModel { get; set; }
 
-      
+        public TweetImageViewerViewModel ImageViewerViewModel { get; set;}
 
+        public static TweetAccessor Instance = new TweetAccessor();
 
         /// <summary>
         /// ホームタイムラインを取得します。
@@ -39,6 +40,10 @@ namespace SUUUM_CLIENT.Service
             // タイムラインを取得
             var tl = AccessToken.Statuses.HomeTimeline(count => c, page => p, exclude_replies => e_r);
 
+            //試しにリスト取得
+            //var list = AccessToken.Lists.List();
+            //tl = AccessToken.Lists.Statuses(list[0].Id);
+
             // リストへの書き込み
             foreach (var value in tl)
             {
@@ -48,31 +53,25 @@ namespace SUUUM_CLIENT.Service
                 switch (tweet.ExtendedEntities?.Media?.Length??0)
                 {
                     case 1:
-                        homeTimeline.Add(new Tweet(ViewModel,tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl));
+                        homeTimeline.Add(new Tweet(ViewModel,ImageViewerViewModel,tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl));
                         break;
                     case 2:
-                        homeTimeline.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl,tweet.ExtendedEntities.Media[1].MediaUrl));
+                        homeTimeline.Add(new Tweet(ViewModel, ImageViewerViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl,tweet.ExtendedEntities.Media[1].MediaUrl));
                         break;
 
                     case 3:
-                        homeTimeline.Add(new Tweet(ViewModel,tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl));
+                        homeTimeline.Add(new Tweet(ViewModel, ImageViewerViewModel,tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl));
                         break;
                     case 4:
-                        homeTimeline.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl, tweet.ExtendedEntities.Media[3].MediaUrl));
+                        homeTimeline.Add(new Tweet(ViewModel, ImageViewerViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl, tweet.ExtendedEntities.Media[3].MediaUrl));
                         break;
                     default:
                         homeTimeline.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text));
                         break;
                 }
-
-
-               
-
             }
 
             return homeTimeline;
         }
-
-
     }
 }

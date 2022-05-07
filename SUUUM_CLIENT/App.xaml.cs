@@ -3,6 +3,7 @@ using Prism.Ioc;
 using Prism.Modularity;
 using System.Windows;
 using SUUUM_CLIENT.ViewModels;
+using SUUUM_CLIENT.Service;
 
 namespace SUUUM_CLIENT
 {
@@ -13,12 +14,13 @@ namespace SUUUM_CLIENT
     {
         protected override Window CreateShell()
         {
-            return Container.Resolve<MainWindow>();
+            return Container.Resolve<tweet>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-          
+            containerRegistry.RegisterForNavigation<TweetDoc, TweetDocViewModel>();
+            containerRegistry.RegisterSingleton<TweetAccessor>();
 
         }
     }

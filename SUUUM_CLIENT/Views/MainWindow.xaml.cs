@@ -3,11 +3,11 @@
 namespace SUUUM_CLIENT.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for tweet.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class tweet : Window
     {
-        public MainWindow()
+        public tweet()
         {
             InitializeComponent();
         }

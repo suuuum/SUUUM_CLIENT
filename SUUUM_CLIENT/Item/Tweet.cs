@@ -19,7 +19,9 @@ namespace SUUUM_CLIENT.Item
 
         public DelegateCommand ShowImage4 { get; set; }
 
-        public MainWindowViewModel ViewModel { get; set; }
+        public TweetDocViewModel ViewModel { get; set; }
+
+        public TweetImageViewerViewModel Viewer { get; set; }
 
         public string Text { get; set; }
 
@@ -50,9 +52,10 @@ namespace SUUUM_CLIENT.Item
         /// <param name="userImageURL"></param>
         /// <param name="text"></param>
         /// <param name="imageUrl"></param>
-        public Tweet(MainWindowViewModel mainWindowViewModel, string id, string userName, string userImageURL, string text, string imageUrl1)
+        public Tweet(TweetDocViewModel tweetViewModel, TweetImageViewerViewModel Viewer, string id, string userName, string userImageURL, string text, string imageUrl1)
         {
-            ViewModel = mainWindowViewModel;
+            ViewModel = tweetViewModel;
+            this.Viewer = Viewer;
             UserID = id;
             UserName = userName;
             UserImageURL = userImageURL;
@@ -60,12 +63,12 @@ namespace SUUUM_CLIENT.Item
             ImageURL1 = imageUrl1;
             HaveMedia1 = true;
 
-
-            ShowImage1 = new DelegateCommand(() =>
-            {
-            ViewModel.ShowImageURL = ImageURL1;
-            },
-            () => true);
+            if (Viewer != null)
+                ShowImage1 = new DelegateCommand(() =>
+                {
+                    this.Viewer.ShowImageURL = ImageURL1;
+                },
+                () => true);
         }
 
         /// <summary>
@@ -76,9 +79,10 @@ namespace SUUUM_CLIENT.Item
         /// <param name="userImageURL"></param>
         /// <param name="text"></param>
         /// <param name="imageUrl"></param>
-        public Tweet(MainWindowViewModel mainWindowViewModel, string id, string userName, string userImageURL, string text, string imageUrl1, string imageUrl2)
+        public Tweet(TweetDocViewModel tweetViewModel, TweetImageViewerViewModel Viewer, string id, string userName, string userImageURL, string text, string imageUrl1, string imageUrl2)
         {
-            ViewModel = mainWindowViewModel;
+            this.Viewer = Viewer;
+            ViewModel = tweetViewModel;
             UserID = id;
             UserName = userName;
             UserImageURL = userImageURL;
@@ -88,17 +92,21 @@ namespace SUUUM_CLIENT.Item
             ImageURL2 = imageUrl2;
             HaveMedia2 = true;
 
-            ShowImage1 = new DelegateCommand(() =>
+            if (Viewer != null)
             {
-                ViewModel.ShowImageURL = ImageURL1;
+                ShowImage1 = new DelegateCommand(() =>
+            {
+                this.Viewer.ShowImageURL = ImageURL1;
             },
            () => true);
 
-            ShowImage2 = new DelegateCommand(() =>
-            {
-                ViewModel.ShowImageURL = ImageURL2;
-            },
-           () => true);
+                ShowImage2 = new DelegateCommand(() =>
+                {
+                    this.Viewer.ShowImageURL = ImageURL2;
+                },
+               () => true);
+
+            }
         }
 
         /// <summary>
@@ -109,9 +117,10 @@ namespace SUUUM_CLIENT.Item
         /// <param name="userImageURL"></param>
         /// <param name="text"></param>
         /// <param name="imageUrl"></param>
-        public Tweet(MainWindowViewModel mainWindowViewModel, string id, string userName, string userImageURL, string text, string imageUrl1, string imageUrl2, string imageUrl3)
+        public Tweet(TweetDocViewModel tweetViewModel, TweetImageViewerViewModel Viewer, string id, string userName, string userImageURL, string text, string imageUrl1, string imageUrl2, string imageUrl3)
         {
-            ViewModel = mainWindowViewModel;
+            this.Viewer = Viewer;
+            ViewModel = tweetViewModel;
             UserID = id;
             UserName = userName;
             UserImageURL = userImageURL;
@@ -123,23 +132,28 @@ namespace SUUUM_CLIENT.Item
             ImageURL3 = imageUrl3;
             HaveMedia3 = true;
 
-            ShowImage1 = new DelegateCommand(() =>
+            if (Viewer != null)
             {
-                ViewModel.ShowImageURL = ImageURL1;
-            },
-           () => true);
+                ShowImage1 = new DelegateCommand(() =>
+                {
+                    this.Viewer.ShowImageURL = ImageURL1;
+                },
+               () => true);
 
-            ShowImage2 = new DelegateCommand(() =>
-            {
-                ViewModel.ShowImageURL = ImageURL2;
-            },
-           () => true);
+                ShowImage2 = new DelegateCommand(() =>
+                {
+                    this.Viewer.ShowImageURL = ImageURL2;
+                },
+               () => true);
 
-            ShowImage3 = new DelegateCommand(() =>
-            {
-                ViewModel.ShowImageURL = ImageURL3;
-            },
-           () => true);
+                ShowImage3 = new DelegateCommand(() =>
+                {
+                    this.Viewer.ShowImageURL = ImageURL3;
+                },
+               () => true);
+
+            }
+
         }
 
         /// <summary>
@@ -150,9 +164,10 @@ namespace SUUUM_CLIENT.Item
         /// <param name="userImageURL"></param>
         /// <param name="text"></param>
         /// <param name="imageUrl"></param>
-        public Tweet(MainWindowViewModel mainWindowViewModel, string id, string userName, string userImageURL, string text, string imageUrl1, string imageUrl2, string imageUrl3, string imageUrl4)
+        public Tweet(TweetDocViewModel tweetViewModel, TweetImageViewerViewModel Viewer, string id, string userName, string userImageURL, string text, string imageUrl1, string imageUrl2, string imageUrl3, string imageUrl4)
         {
-            ViewModel = mainWindowViewModel;
+            this.Viewer = Viewer;
+            ViewModel = tweetViewModel;
             UserID = id;
             UserName = userName;
             UserImageURL = userImageURL;
@@ -166,29 +181,33 @@ namespace SUUUM_CLIENT.Item
             ImageURL4 = imageUrl4;
             HaveMedia4 = true;
 
-            ShowImage1 = new DelegateCommand(() =>
+            if (Viewer != null)
             {
-                ViewModel.ShowImageURL = ImageURL1;
-            },
-           () => true);
+                ShowImage1 = new DelegateCommand(() =>
+                {
+                    this.Viewer.ShowImageURL = ImageURL1;
+                },
+               () => true);
 
-            ShowImage2 = new DelegateCommand(() =>
-            {
-                ViewModel.ShowImageURL = ImageURL2;
-            },
-           () => true);
+                ShowImage2 = new DelegateCommand(() =>
+                {
+                    this.Viewer.ShowImageURL = ImageURL2;
+                },
+               () => true);
 
-            ShowImage3 = new DelegateCommand(() =>
-            {
-                ViewModel.ShowImageURL = ImageURL3;
-            },
-           () => true);
+                ShowImage3 = new DelegateCommand(() =>
+                {
+                    this.Viewer.ShowImageURL = ImageURL3;
+                },
+               () => true);
 
-            ShowImage4 = new DelegateCommand(() =>
-            {
-                ViewModel.ShowImageURL = ImageURL4;
-            },
-           () => true);
+                ShowImage4 = new DelegateCommand(() =>
+                {
+                    this.Viewer.ShowImageURL = ImageURL4;
+                },
+               () => true);
+
+            }
         }
 
         /// <summary>
@@ -199,9 +218,9 @@ namespace SUUUM_CLIENT.Item
         /// <param name="userImageURL"></param>
         /// <param name="text"></param>
         /// <param name="imageUrl"></param>
-        public Tweet(MainWindowViewModel mainWindowViewModel, string id, string userName, string userImageURL, string text)
+        public Tweet(TweetDocViewModel tweetViewModel, string id, string userName, string userImageURL, string text)
         {
-            ViewModel = mainWindowViewModel;
+            ViewModel = tweetViewModel;
             UserID = id;
             UserName = userName;
             UserImageURL = userImageURL;
