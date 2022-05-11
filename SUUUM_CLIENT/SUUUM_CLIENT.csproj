@@ -47,6 +47,7 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -57,11 +58,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Item\Tweet.cs" />
+    <Compile Include="Item\TweetList.cs" />
+    <Compile Include="Parts\WheelSpeedScrollViewer.cs" />
     <Compile Include="Service\TweetAccessor.cs" />
+    <Compile Include="ViewModels\AuthorizeDialogViewModel.cs" />
     <Compile Include="ViewModels\TweetDocViewModel.cs" />
     <Compile Include="ViewModels\TimeLineControlViewModel.cs" />
     <Compile Include="ViewModels\TweetControlViewModel.cs" />
     <Compile Include="ViewModels\TweetImageViewerViewModel.cs" />
+    <Compile Include="ViewModels\WebBrowserViewModel.cs" />
+    <Compile Include="Views\AuthorizeDialog.xaml.cs">
+      <DependentUpon>AuthorizeDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TimeLineControl.xaml.cs">
       <DependentUpon>TimeLineControl.xaml</DependentUpon>
     </Compile>
@@ -74,6 +82,13 @@
     <Compile Include="Views\TweetImageViewer.xaml.cs">
       <DependentUpon>TweetImageViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\WebBrowser.xaml.cs">
+      <DependentUpon>WebBrowser.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\AuthorizeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -100,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TweetImageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WebBrowser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -150,6 +169,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icon\write.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\矢印アイコン右.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\矢印アイコン左.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\地球儀.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\ブックマーク.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

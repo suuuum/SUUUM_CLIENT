@@ -9,6 +9,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              Width="Auto"
              Height="Auto"
+             FontSize="14"
              x:Name="root">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolVisibilityConverter" />
@@ -40,7 +41,8 @@
                                     Grid.Column="1"
                                     Orientation="Horizontal">
                             <TextBlock Text="{Binding UserName}" 
-                                       Foreground="AliceBlue"/>
+                                       Foreground="AliceBlue"
+                                       FontWeight="Bold" />
                             <TextBlock Text="@"
                                        Foreground="Aqua" />
                             <TextBlock Text="{Binding UserID}"

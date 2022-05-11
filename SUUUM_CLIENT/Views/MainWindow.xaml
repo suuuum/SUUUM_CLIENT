@@ -43,20 +43,20 @@
                     </avalonDock:LayoutAnchorablePane>
                     <avalonDock:LayoutAnchorablePane DockHeight="100"
                                                      x:Name="uxAnchorablePane3"
-                                                     DockWidth="*">
+                                                     DockWidth="300">
                         <!-- ツールウィンドウ -->
                         <avalonDock:LayoutAnchorable Title="ToolWindow3"
                                                      ContentId="ToolWindow3">
-                            <wv2:WebView2 Source="https://www.netkeiba.com/" />
+                            <local:WebBrowser />
                         </avalonDock:LayoutAnchorable>
                     </avalonDock:LayoutAnchorablePane>
                     <avalonDock:LayoutAnchorablePane DockHeight="100"
                                                      x:Name="uxAnchorablePane4"
-                                                     DockWidth="*">
+                                                     DockWidth="300">
                         <!-- ツールウィンドウ -->
                         <avalonDock:LayoutAnchorable Title="ToolWindo4"
                                                      ContentId="ToolWindow4">
-                            <wv2:WebView2 Source="https://sp.gch.jp/" />
+                            <local:WebBrowser />
                         </avalonDock:LayoutAnchorable>
                     </avalonDock:LayoutAnchorablePane>
                 </avalonDock:LayoutPanel>

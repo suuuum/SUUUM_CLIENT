@@ -22,6 +22,8 @@ namespace SUUUM_CLIENT
             containerRegistry.RegisterForNavigation<TweetDoc, TweetDocViewModel>();
             containerRegistry.RegisterSingleton<TweetAccessor>();
 
+            containerRegistry.RegisterDialog<AuthorizeDialog>();
+
         }
     }
 }

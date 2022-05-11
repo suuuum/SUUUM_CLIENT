@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:SUUUM_CLIENT.Views"
              mc:Ignorable="d"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:parts="clr-namespace:SUUUM_CLIENT.Parts"
              prism:ViewModelLocator.AutoWireViewModel="True"
              d:DesignHeight="800" d:DesignWidth="200">
     <Grid>
@@ -20,16 +21,23 @@
             <Button>
                 <Image Source="D:\VS\SUUUM_CLIENT\SUUUM_CLIENT\Icon\write.png" />
             </Button>
-            <ComboBox>
-            </ComboBox>
+            <ComboBox ItemsSource="{Binding Lists}"
+                      Name="ListSelectBox"
+                      IsEditable="True"
+                      SelectedValuePath="Id"
+                      DisplayMemberPath="Name"
+                      SelectedValue="{Binding SelectedValue}"
+                      FontSize="16"
+                      Foreground="LightBlue"
+                      Width="200"
+                      />
         </StackPanel>
-        
-        <ScrollViewer Grid.Row="1">
+        <parts:WheelSpeedScrollViewer Grid.Row="1"  >
             <StackPanel>
                 <local:TimeLineControl DataContext="{Binding Items, Mode=TwoWay}" />
                 <Button Content="tuika"
                         Command="{Binding AddTweets}" />
             </StackPanel>
-        </ScrollViewer>
+        </parts:WheelSpeedScrollViewer>
     </Grid>
 </UserControl>
