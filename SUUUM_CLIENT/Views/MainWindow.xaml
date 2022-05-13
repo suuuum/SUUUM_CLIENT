@@ -1,4 +1,4 @@
-﻿<Window x:Class="SUUUM_CLIENT.Views.tweet"
+﻿<Window x:Class="SUUUM_CLIENT.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
@@ -13,52 +13,36 @@
         Height="1090"
         Width="1920">
     <Window.DataContext>
-        <vm:tweetViewModel />
+        <vm:MainWindowViewModel />
     </Window.DataContext>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <local:MainWindowMenu></local:MainWindowMenu>
         <avalonDock:DockingManager x:Name="uxDockingManager"
+                                   Grid.Row="1"
                                    AllowMixedOrientation="True">
             <avalonDock:DockingManager.Theme>
                 <avalonDock:Vs2013DarkTheme />
             </avalonDock:DockingManager.Theme>
             <avalonDock:LayoutRoot>
-                <avalonDock:LayoutPanel Orientation="Horizontal">
-                    <avalonDock:LayoutDocumentPane x:Name="uxDocumentPane"
-                                                   DockWidth="200">
-                        <!-- ドキュメント  ★ここから-->
-                        <avalonDock:LayoutDocument Title="Document1"
-                                                   ContentId="Document1">
-                            <local:TweetDoc />
+                <avalonDock:LayoutPanel Orientation="Horizontal"
+                                       x:Name ="MainPanel">
+                    <avalonDock:LayoutDocumentPane x:Name="uxDocumentPane">
+                        <avalonDock:LayoutDocument Title="Twitter"
+                                                   IconSource="pack://application:,,,/Icon/bird.png"
+                                                   ContentId="Twitter">
+                            <local:TweetDoc  />
                         </avalonDock:LayoutDocument>
-                        <!-- ドキュメント ★ここまで-->
                     </avalonDock:LayoutDocumentPane>
-                    <avalonDock:LayoutAnchorablePane DockHeight="100"
-                                                     x:Name="uxAnchorablePane2"
-                                                     DockWidth="400">
-                        <!-- ツールウィンドウ -->
-                        <avalonDock:LayoutAnchorable Title="ToolWindow2"
-                                                     ContentId="ToolWindow2">
-                            <local:TweetImageViewer />
-                        </avalonDock:LayoutAnchorable>
-                    </avalonDock:LayoutAnchorablePane>
-                    <avalonDock:LayoutAnchorablePane DockHeight="100"
-                                                     x:Name="uxAnchorablePane3"
-                                                     DockWidth="300">
-                        <!-- ツールウィンドウ -->
-                        <avalonDock:LayoutAnchorable Title="ToolWindow3"
-                                                     ContentId="ToolWindow3">
+                    <avalonDock:LayoutDocumentPane x:Name="uxDocumentPane2">
+                        <avalonDock:LayoutDocument Title="Browser"
+                                                   ContentId="Browser">
                             <local:WebBrowser />
-                        </avalonDock:LayoutAnchorable>
-                    </avalonDock:LayoutAnchorablePane>
-                    <avalonDock:LayoutAnchorablePane DockHeight="100"
-                                                     x:Name="uxAnchorablePane4"
-                                                     DockWidth="300">
-                        <!-- ツールウィンドウ -->
-                        <avalonDock:LayoutAnchorable Title="ToolWindo4"
-                                                     ContentId="ToolWindow4">
-                            <local:WebBrowser />
-                        </avalonDock:LayoutAnchorable>
-                    </avalonDock:LayoutAnchorablePane>
+                        </avalonDock:LayoutDocument>
+                    </avalonDock:LayoutDocumentPane>
                 </avalonDock:LayoutPanel>
             </avalonDock:LayoutRoot>
         </avalonDock:DockingManager>

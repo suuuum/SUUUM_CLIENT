@@ -16,10 +16,10 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <Button Command="{Binding Reload}">
-                <Image Source="D:\VS\SUUUM_CLIENT\SUUUM_CLIENT\Icon\リロードアイコン.png" />
+                <Image Source="pack://application:,,,/Icon/リロードアイコン.png" />
             </Button>
             <Button>
-                <Image Source="D:\VS\SUUUM_CLIENT\SUUUM_CLIENT\Icon\write.png" />
+                <Image Source="pack://application:,,,/Icon/write.png" />
             </Button>
             <ComboBox ItemsSource="{Binding Lists}"
                       Name="ListSelectBox"
@@ -27,6 +27,7 @@
                       SelectedValuePath="Id"
                       DisplayMemberPath="Name"
                       SelectedValue="{Binding SelectedValue}"
+                      SelectedItem="{Binding SelectedItem}"
                       FontSize="16"
                       Foreground="LightBlue"
                       Width="200"

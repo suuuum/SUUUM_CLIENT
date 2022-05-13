@@ -61,7 +61,9 @@
     <Compile Include="Item\TweetList.cs" />
     <Compile Include="Parts\WheelSpeedScrollViewer.cs" />
     <Compile Include="Service\TweetAccessor.cs" />
+    <Compile Include="Service\WindowAgent.cs" />
     <Compile Include="ViewModels\AuthorizeDialogViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowMenuViewModel.cs" />
     <Compile Include="ViewModels\TweetDocViewModel.cs" />
     <Compile Include="ViewModels\TimeLineControlViewModel.cs" />
     <Compile Include="ViewModels\TweetControlViewModel.cs" />
@@ -69,6 +71,9 @@
     <Compile Include="ViewModels\WebBrowserViewModel.cs" />
     <Compile Include="Views\AuthorizeDialog.xaml.cs">
       <DependentUpon>AuthorizeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindowMenu.xaml.cs">
+      <DependentUpon>MainWindowMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TimeLineControl.xaml.cs">
       <DependentUpon>TimeLineControl.xaml</DependentUpon>
@@ -102,6 +107,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\MainWindowMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TimeLineControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -181,6 +190,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icon\ブックマーク.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\bird.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\blueEarth.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Ilust.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

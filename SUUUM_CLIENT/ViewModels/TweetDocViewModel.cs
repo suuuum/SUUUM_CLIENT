@@ -13,15 +13,17 @@ namespace SUUUM_CLIENT.ViewModels
     {
         private readonly TweetAccessor TweetAccessor;
 
+        private readonly WindowAgent Agent;
+
         public static TweetList Home = new TweetList(0, "ホーム");
 
 
-        private string _title = "Prism Application";
-        public string Title
+        public string Id
         {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
+            get { return id; }
+            set { SetProperty(ref id, value); }
         }
+        private string id = "Twitter";
 
         public DelegateCommand Reload { get; set; }
 
@@ -46,16 +48,29 @@ namespace SUUUM_CLIENT.ViewModels
         public long SelectedValue
         {
             get { return _selectedValue; }
-            set { SetProperty(ref _selectedValue, value); }
+            set { SetProperty(ref _selectedValue, value);
+            }
         }
         private long _selectedValue;
 
+        public TweetList SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                SetProperty(ref _selectedItem, value);
+                
+            }
+        }
+        private TweetList _selectedItem;
 
 
 
-        public TweetDocViewModel(TweetAccessor accessor, IDialogService dialog)
+
+        public TweetDocViewModel(TweetAccessor accessor, IDialogService dialog,WindowAgent agent)
         {
             TweetAccessor = accessor;
+            Agent = agent;
             if (!TweetAccessor.IsAuthorized)
             {
                 TweetAccessor.StartAuthorize();
@@ -79,6 +94,7 @@ namespace SUUUM_CLIENT.ViewModels
                 Items.Clear();
                 Items.AddRange(TweetAccessor.getListTimeline(SelectedValue, 100, 1, true));
                 page = 1;
+                Agent.SetTweetDocTitle(Id, SelectedItem.Name);
             },
             () => true);
 

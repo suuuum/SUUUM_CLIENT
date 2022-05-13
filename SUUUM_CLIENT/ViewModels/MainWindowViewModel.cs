@@ -1,8 +1,9 @@
 ﻿using Prism.Mvvm;
+using SUUUM_CLIENT.Service;
 
 namespace SUUUM_CLIENT.ViewModels
 {
-    public class tweetViewModel : BindableBase
+    public class MainWindowViewModel : BindableBase
     {
         private string _title = "Prism Application";
         public string Title
@@ -10,6 +11,5 @@ namespace SUUUM_CLIENT.ViewModels
             get { return _title; }
             set { SetProperty(ref _title, value); }
         }
-
     }
 }

@@ -19,15 +19,15 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0">
-                <Image Source="D:\VS\SUUUM_CLIENT\SUUUM_CLIENT\Icon\矢印アイコン左.png" />
+                <Image Source="pack://application:,,,/Icon/矢印アイコン左.png" />
             </Button>
             <Button Grid.Column="1">
-                <Image Source="D:\VS\SUUUM_CLIENT\SUUUM_CLIENT\Icon\矢印アイコン右.png" />
+                <Image Source="pack://application:,,,/Icon/矢印アイコン右.png" />
             </Button>
             <Button Grid.Column="2"
                     Name="ReloadButton"
                     Click="ReloadButton_Click">
-                <Image Source="D:\VS\SUUUM_CLIENT\SUUUM_CLIENT\Icon\リロードアイコン.png" />
+                <Image Source="pack://application:,,,/Icon/リロードアイコン.png" />
             </Button>
             <TextBox Name="addressBar"
                      Grid.Column="3"
@@ -39,10 +39,10 @@
                     Name="searchButton"
                     Background="Transparent"
                     Command="{Binding MoveURL}">
-                <Image Source="D:\VS\SUUUM_CLIENT\SUUUM_CLIENT\Icon\地球儀.png" />
+                <Image Source="pack://application:,,,/Icon/地球儀.png" />
             </Button>
             <Button Grid.Column="5">
-                <Image Source="D:\VS\SUUUM_CLIENT\SUUUM_CLIENT\Icon\ブックマーク.png" />
+                <Image Source="pack://application:,,,/Icon/ブックマーク.png" />
             </Button>
         </Grid>
         <wv2:WebView2 Name="webView"

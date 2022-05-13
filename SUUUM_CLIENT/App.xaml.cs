@@ -14,13 +14,14 @@ namespace SUUUM_CLIENT
     {
         protected override Window CreateShell()
         {
-            return Container.Resolve<tweet>();
+            return Container.Resolve<MainWindow>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<TweetDoc, TweetDocViewModel>();
             containerRegistry.RegisterSingleton<TweetAccessor>();
+            containerRegistry.RegisterSingleton<WindowAgent>();
 
             containerRegistry.RegisterDialog<AuthorizeDialog>();
 

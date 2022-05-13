@@ -10,6 +10,13 @@ namespace SUUUM_CLIENT.ViewModels
     {
         private const string HomeURL = "https://www.google.com/?hl=ja";
 
+        public string Id
+        {
+            get { return id; }
+            set { SetProperty(ref id, value); }
+        }
+        private string id = "Browser";
+
         public string URL
         {
             get { return _URL; }
