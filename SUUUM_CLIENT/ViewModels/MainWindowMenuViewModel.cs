@@ -17,6 +17,8 @@ namespace SUUUM_CLIENT.ViewModels
 
         public DelegateCommand OpenWebBrowser { get; set; }
 
+        public DelegateCommand OpenImageViewer { get; set; }
+
 
 
         public MainWindowMenuViewModel(WindowAgent agent)
@@ -29,6 +31,9 @@ namespace SUUUM_CLIENT.ViewModels
             OpenWebBrowser = new DelegateCommand(() =>
             OpenBrowserCommand(),
            () => true);
+
+            OpenImageViewer = new DelegateCommand(() =>
+            OpenImageViewerCommad(), () => true);
         }
 
         private void OpenTwitterCommand()
@@ -39,6 +44,11 @@ namespace SUUUM_CLIENT.ViewModels
         private void OpenBrowserCommand()
         {
             agent.AddWebBrouserDoc();
+        }
+
+        private void OpenImageViewerCommad()
+        {
+            agent.AddImageViewerDoc();
         }
     }
 }

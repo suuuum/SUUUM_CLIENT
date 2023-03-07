@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Item\ImageInformation.cs" />
     <Compile Include="Item\Tweet.cs" />
     <Compile Include="Item\TweetList.cs" />
     <Compile Include="Parts\WheelSpeedScrollViewer.cs" />
@@ -66,7 +67,6 @@
     <Compile Include="ViewModels\MainWindowMenuViewModel.cs" />
     <Compile Include="ViewModels\TweetDocViewModel.cs" />
     <Compile Include="ViewModels\TimeLineControlViewModel.cs" />
-    <Compile Include="ViewModels\TweetControlViewModel.cs" />
     <Compile Include="ViewModels\TweetImageViewerViewModel.cs" />
     <Compile Include="ViewModels\WebBrowserViewModel.cs" />
     <Compile Include="Views\AuthorizeDialog.xaml.cs">
@@ -77,9 +77,6 @@
     </Compile>
     <Compile Include="Views\TimeLineControl.xaml.cs">
       <DependentUpon>TimeLineControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TweetControl.xaml.cs">
-      <DependentUpon>TweetControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TweetDoc.xaml.cs">
       <DependentUpon>TweetDoc.xaml</DependentUpon>
@@ -115,10 +112,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TweetControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\TweetDoc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -150,10 +143,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.example.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CoreTweet">
@@ -172,6 +167,9 @@
       <Version>1.0.1185.39</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
+    <PackageReference Include="System.Configuration.ConfigurationManager">
+      <Version>7.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icon\リロードアイコン.png" />
@@ -199,6 +197,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icon\Ilust.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\not_favorite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\favorite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\リロードアイコン_ON.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Event\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using SUUUM_CLIENT.ViewModels;
+using System.Windows.Controls;
 
 namespace SUUUM_CLIENT.Views
 {
@@ -7,9 +8,14 @@ namespace SUUUM_CLIENT.Views
     /// </summary>
     public partial class TweetDoc : UserControl
     {
+
+        private TweetDocViewModel  ViewModel;
         public TweetDoc()
         {
             InitializeComponent();
+            ViewModel = (TweetDocViewModel)this.DataContext;
+            ViewModel.View = this;
+
         }
     }
 }

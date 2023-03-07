@@ -1,23 +1,33 @@
 ﻿<UserControl x:Class="SUUUM_CLIENT.Views.TweetDoc"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:SUUUM_CLIENT.Views"
              mc:Ignorable="d"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:parts="clr-namespace:SUUUM_CLIENT.Parts"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             d:DesignHeight="800" d:DesignWidth="200">
+             d:DesignHeight="800"
+             d:DesignWidth="200">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <Button Command="{Binding Reload}">
-                <Image Source="pack://application:,,,/Icon/リロードアイコン.png" />
-            </Button>
+            <Grid>
+                <Button Command="{Binding ReloadOn}"
+                        Visibility="{Binding OffModeVisibility}">
+                    <Image Source="pack://application:,,,/Icon/リロードアイコン.png"
+                           />
+                </Button>
+                <Button Command="{Binding ReloadOff}"
+                        Visibility="{Binding OnModeVisibility}">
+                    <Image Source="pack://application:,,,/Icon/リロードアイコン_ON.png"
+                          />
+                </Button>
+            </Grid>
             <Button>
                 <Image Source="pack://application:,,,/Icon/write.png" />
             </Button>
@@ -30,10 +40,9 @@
                       SelectedItem="{Binding SelectedItem}"
                       FontSize="16"
                       Foreground="LightBlue"
-                      Width="200"
-                      />
+                      Width="200" />
         </StackPanel>
-        <parts:WheelSpeedScrollViewer Grid.Row="1"  >
+        <parts:WheelSpeedScrollViewer Grid.Row="1">
             <StackPanel>
                 <local:TimeLineControl DataContext="{Binding Items, Mode=TwoWay}" />
                 <Button Content="tuika"

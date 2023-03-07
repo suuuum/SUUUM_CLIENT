@@ -4,9 +4,7 @@ using SUUUM_CLIENT.Item;
 using SUUUM_CLIENT.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 using static CoreTweet.OAuth;
 
 namespace SUUUM_CLIENT.Service
@@ -17,7 +15,7 @@ namespace SUUUM_CLIENT.Service
     public class TweetAccessor
     {
         /// <summary>アクセストークン</summary>
-        private Tokens AccessToken;
+        internal static Tokens AccessToken;
         /// <summary>
         /// 認証セッション
         /// </summary>
@@ -27,7 +25,6 @@ namespace SUUUM_CLIENT.Service
 
         public TweetDocViewModel ViewModel { get; set; }
 
-        public TweetImageViewerViewModel ImageViewerViewModel { get; set; }
 
         public static TweetAccessor Instance = new TweetAccessor();
 
@@ -43,7 +40,6 @@ namespace SUUUM_CLIENT.Service
 
             // タイムラインを取得
             var tl = AccessToken.Statuses.HomeTimeline(count => c, page => p, exclude_replies => e_r);
-
             return CreateTimeLine(tl);
         }
 
@@ -66,25 +62,25 @@ namespace SUUUM_CLIENT.Service
             foreach (var value in tl)
             {
                 var tweet = value.RetweetedStatus ?? value;
+                var isFavorite = tweet.IsFavorited ?? false;
 
-
+                var statusId = tweet.Id;
                 switch (tweet.ExtendedEntities?.Media?.Length ?? 0)
                 {
                     case 1:
-                        TimeLine.Add(new Tweet(ViewModel, ImageViewerViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl));
+                        TimeLine.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, null, null, null, statusId, isFavorite));
                         break;
                     case 2:
-                        TimeLine.Add(new Tweet(ViewModel, ImageViewerViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl));
+                        TimeLine.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, null, null, statusId, isFavorite));
                         break;
-
                     case 3:
-                        TimeLine.Add(new Tweet(ViewModel, ImageViewerViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl));
+                        TimeLine.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl, null, statusId, isFavorite));
                         break;
                     case 4:
-                        TimeLine.Add(new Tweet(ViewModel, ImageViewerViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl, tweet.ExtendedEntities.Media[3].MediaUrl));
+                        TimeLine.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl, tweet.ExtendedEntities.Media[3].MediaUrl, statusId, isFavorite));
                         break;
                     default:
-                        TimeLine.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text));
+                        TimeLine.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, statusId, isFavorite));
                         break;
                 }
             }
@@ -92,6 +88,15 @@ namespace SUUUM_CLIENT.Service
             return TimeLine;
         }
 
+        public void AddFavorid(long statusId)
+        {
+            AccessToken.Favorites.Create(id => statusId);
+        }
+
+        public void RemoveFavorid(long statusId)
+        {
+            AccessToken.Favorites.Destroy(id => statusId);
+        }
 
         public ListedResponse<List> GetLists()
         {
@@ -100,26 +105,18 @@ namespace SUUUM_CLIENT.Service
 
         public void StartAuthorize()
         {
-            Session = OAuth.Authorize("ama6btJ08FK1egHYz2MntFCTF", "bDi3Q3vIy2EqotLsDD92CEqDRRyLrzufAYgx5oB0vdrrsL0T2o");
+            Session = OAuth.Authorize(ConfigurationManager.AppSettings["APIKey"], ConfigurationManager.AppSettings["APIKeySecret"]);
             System.Diagnostics.Process.Start(Session.AuthorizeUri.AbsoluteUri);
         }
 
         public void SetToken(string pin)
         {
-            try
-            {
-                AccessToken = OAuth.GetTokens(Session, pin);
-                IsAuthorized = true;
-            }
-            catch (Exception e)
-            {
-                AccessToken = Tokens.Create("ama6btJ08FK1egHYz2MntFCTF",        // API key
-                "bDi3Q3vIy2EqotLsDD92CEqDRRyLrzufAYgx5oB0vdrrsL0T2o",                    // API secret key
-                "1289495716541292548-ENhOyR8vI0EOSRzricMDZfW6cnkb2r",                  // Access token
-                "ssZe3EcivC6ztTyAZytAfcCwL3MBZtnu9z7EFK628ek1N");          // Access token secret
+            AccessToken = OAuth.GetTokens(Session, pin);
+        }
 
-                IsAuthorized = true;
-            }
+        public void CreateToken(string accessToken, string accessTokenSecret, string userId, string screenName)
+        {
+            AccessToken = Tokens.Create(ConfigurationManager.AppSettings["APIKey"], ConfigurationManager.AppSettings["APIKeySecret"], accessToken, accessTokenSecret, Int64.Parse(userId), screenName);
         }
 
     }

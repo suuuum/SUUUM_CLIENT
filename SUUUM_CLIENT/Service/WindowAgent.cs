@@ -3,6 +3,7 @@ using SUUUM_CLIENT.ViewModels;
 using SUUUM_CLIENT.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace SUUUM_CLIENT.Service
         public void AddTweetDoc()
         {
 
-            var newTwitterDocLayout = new LayoutDocument {Title="Twitter",ContentId = "Twitter"+(TweetDocIdMax+1) ,Content = new TweetDoc()};
+            var newTwitterDocLayout = new LayoutDocument { Title = "Twitter", ContentId = "Twitter" + (TweetDocIdMax + 1), Content = new TweetDoc() };
             TweetDocIdMax++;
             ((TweetDocViewModel)((TweetDoc)newTwitterDocLayout.Content).DataContext).Id = newTwitterDocLayout.ContentId;
             AddDocument<TweetDoc>(newTwitterDocLayout);
@@ -36,13 +37,13 @@ namespace SUUUM_CLIENT.Service
         /// </summary>
         /// <param name="contentId">対象Twitter画面のID</param>
         /// <param name="title">設定したいタイトル</param>
-        public void SetTweetDocTitle(string contentId,string title)
+        public void SetTweetDocTitle(string contentId, string title)
         {
             SetTitile<TweetDoc>(contentId, title);
         }
 
         /// <summary>
-        /// Twitter画面(TweetDoc)をメインウインドウに追加します。
+        /// WebBrowser画面をメインウインドウに追加します。
         /// </summary>
         public void AddWebBrouserDoc()
         {
@@ -52,6 +53,21 @@ namespace SUUUM_CLIENT.Service
             ((WebBrowserViewModel)((WebBrowser)newBrowserDocLayout.Content).DataContext).Id = newBrowserDocLayout.ContentId;
             AddDocument<WebBrowser>(newBrowserDocLayout);
         }
+
+
+
+        /// <summary>
+        /// TweetImageBrowser画面をメインウインドウに追加します。
+        /// </summary>
+        public void AddImageViewerDoc()
+        {
+            var newImageDocLayout = new LayoutDocument { Title = "ImageViewer", ContentId = "ImageViewer" + (BrowserIdMax + 1), Content = new TweetImageViewer() };
+            BrowserIdMax++;
+            //((TweetImageViewerViewModel)((TweetImageViewer)newImageDocLayout.Content).DataContext).Id = newImageDocLayout.ContentId;
+            AddDocument<TweetImageViewer>(newImageDocLayout);
+        }
+
+
 
         /// <summary>
         /// 画面をメインウインドウに追加します
@@ -90,22 +106,47 @@ namespace SUUUM_CLIENT.Service
         /// <typeparam name="T">対象画面のクラス</typeparam>
         /// <param name="contentId">ID</param>
         /// <param name="title">設定したいタイトル</param>
-        private void SetTitile<T>(string contentId,string title) where T:UserControl
+        private void SetTitile<T>(string contentId, string title) where T : UserControl
         {
             var docPanels = MainWindow.LayoutPanel.Children;
+
             foreach (var item in docPanels)
             {
-                if (item.GetType() != typeof(LayoutDocumentPane))
-                    continue;
-
-                var layout = ((LayoutDocumentPane)item).Children.
-                    FirstOrDefault(target => target.Content.GetType() == typeof(T) && target.ContentId == contentId);
+                LayoutContent layout = SearchContent<T>(contentId,title,item);
 
                 if (layout != null)
                 {
                     layout.Title = title;
+                    return;
                 }
             }
+        }
+
+        private LayoutContent SearchContent<T>(string contentId, string title, ILayoutElement element)
+        {
+            LayoutContent layout = null;
+            if (element is LayoutDocumentPane)
+            {
+                layout = ((LayoutDocumentPane)element).Children.
+               FirstOrDefault(target => target.Content.GetType() == typeof(T) && target.ContentId == contentId);
+
+            }
+
+            //再帰関数にする
+            if (element is LayoutDocumentPaneGroup)
+            {
+
+                var layouts = ((LayoutDocumentPaneGroup)element).Children;
+                foreach (var content in layouts)
+                {
+                    layout = SearchContent<T>(contentId, title, content);
+
+                }
+
+            }
+
+            return layout;
+
         }
 
 

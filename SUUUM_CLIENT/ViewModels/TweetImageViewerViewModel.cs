@@ -1,5 +1,7 @@
 ﻿using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
+using SUUUM_CLIENT.Item;
 using SUUUM_CLIENT.Service;
 using System;
 using System.Collections.Generic;
@@ -24,10 +26,15 @@ namespace SUUUM_CLIENT.ViewModels
             get { return _showImageURL; }
             set { SetProperty(ref _showImageURL, value); }
         }
-        public TweetImageViewerViewModel(TweetAccessor accessor)
+        public TweetImageViewerViewModel(IEventAggregator eventAggregator, TweetAccessor accessor)
         {
             TweetAccessor = accessor;
-            TweetAccessor.ImageViewerViewModel = this;
+            eventAggregator.GetEvent<ShowImageEvent<ImageInformation>>().Subscribe(HandleShowImageEvent);
+        }
+
+        private void HandleShowImageEvent(ImageInformation info)
+        {
+            ShowImageURL = info.ImageUrl;
         }
     }
 }
