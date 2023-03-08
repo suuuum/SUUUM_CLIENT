@@ -5,42 +5,55 @@ using SUUUM_CLIENT.ViewModels;
 using System.Windows;
 
 namespace SUUUM_CLIENT.Item
-{
+{   
+    /// <summary>
+    /// Tweetのモデルクラスです。
+    /// </summary>
     public class Tweet : BindableBase
     {
-        public DelegateCommand ShowImage1 { get; set; }
+        /// <summary>
+        /// ツイート識別ID
+        /// </summary>
+        public long StatusId { get; private set; }
 
-        public DelegateCommand ShowImage2 { get; set; }
+        /// <summary>
+        /// ユーザープロフィール画像
+        /// </summary>
+        public string UserImageURL { get; set; }
 
-        public DelegateCommand ShowImage3 { get; set; }
+        /// <summary>
+        /// ユーザー名
+        /// </summary>
+        public string UserName { get; set; }
 
-        public DelegateCommand ShowImage4 { get; set; }
+        /// <summary>
+        /// ユーザーID
+        /// </summary>
+        public string UserID { get; set; }
 
-        public DelegateCommand AddFavorite { get; set; }
-
-        public DelegateCommand RemoveFavorite { get; set; }
-
-        public TweetDocViewModel ViewModel { get; set; }
-
+        /// <summary>
+        /// ツイート本文
+        /// </summary>
         public string Text { get; set; }
 
+        /// <summary>
+        /// メディアの有無を判定します。(バインディングに利用)
+        /// </summary>
         public bool HaveMedia1 { get => !string.IsNullOrEmpty(ImageURL1); }
+        /// <summary>
+        /// メディア（画像）のURL
+        /// </summary>
         public string ImageURL1 { get; set; }
-
         public bool HaveMedia2 { get => !string.IsNullOrEmpty(ImageURL2); }
         public string ImageURL2 { get; set; }
-
         public bool HaveMedia3 { get => !string.IsNullOrEmpty(ImageURL3); }
         public string ImageURL3 { get; set; }
-
         public bool HaveMedia4 { get => !string.IsNullOrEmpty(ImageURL4); }
         public string ImageURL4 { get; set; }
 
-        public string UserImageURL { get; set; }
-
-        public string UserName { get; set; }
-
-        public string UserID { get; set; }
+        /// <summary>
+        /// ツイートがお気に入りされているか
+        /// </summary>
         private bool isFavorite;
         public bool IsFavorite
         {
@@ -52,8 +65,10 @@ namespace SUUUM_CLIENT.Item
                 NotFavoriteVisibility = isFavorite ? Visibility.Collapsed : Visibility.Visible;
             }
         }
-        public long StatusId { get; private set; }
 
+        /// <summary>
+        /// いいねによる可視性制御用のプロパティ(バインディングに利用)
+        /// </summary>
         private Visibility favoriteVisibility;
         public Visibility FavoriteVisibility
         {
@@ -61,7 +76,6 @@ namespace SUUUM_CLIENT.Item
             set { this.SetProperty(ref this.favoriteVisibility, value); }
 
         }
-
         private Visibility notFavoriteVisibility;
         public Visibility NotFavoriteVisibility
         {
@@ -69,8 +83,14 @@ namespace SUUUM_CLIENT.Item
             set { this.SetProperty(ref this.notFavoriteVisibility, value); }
         }
 
-
-   
+        /// <summary>
+        /// いいねをするコマンド
+        /// </summary>
+        public DelegateCommand AddFavorite { get; set; }
+        /// <summary>
+        /// いいね解除のコマンド
+        /// </summary>
+        public DelegateCommand RemoveFavorite { get; set; }
 
         /// <summary>
         /// mediaがある場合
@@ -80,11 +100,10 @@ namespace SUUUM_CLIENT.Item
         /// <param name="userImageURL"></param>
         /// <param name="text"></param>
         /// <param name="imageUrl"></param>
-        public Tweet(TweetDocViewModel tweetViewModel, string id, string userName, string userImageURL, string text, string imageUrl1, string imageUrl2, string imageUrl3, string imageUrl4, long statusId, bool isFavorite)
+        public Tweet(string id, string userName, string userImageURL, string text, string imageUrl1, string imageUrl2, string imageUrl3, string imageUrl4, long statusId, bool isFavorite)
         {
-            SetBaseStatus(tweetViewModel, id, userName, userImageURL, text, statusId, isFavorite);
+            SetBaseStatus(id, userName, userImageURL, text, statusId, isFavorite);
             SetMediaStatus(imageUrl1, imageUrl2, imageUrl3, imageUrl4);
-
         }
 
         /// <summary>
@@ -95,15 +114,22 @@ namespace SUUUM_CLIENT.Item
         /// <param name="userImageURL"></param>
         /// <param name="text"></param>
         /// <param name="imageUrl"></param>
-        public Tweet(TweetDocViewModel tweetViewModel, string id, string userName, string userImageURL, string text, long statusId, bool isFavorite)
+        public Tweet(string id, string userName, string userImageURL, string text, long statusId, bool isFavorite)
         {
-            SetBaseStatus(tweetViewModel, id, userName, userImageURL, text, statusId, isFavorite);
+            SetBaseStatus(id, userName, userImageURL, text, statusId, isFavorite);
         }
 
-
-        private void SetBaseStatus(TweetDocViewModel tweetViewModel, string id, string userName, string userImageURL, string text, long statusId, bool isFavorite)
+        /// <summary>
+        /// 基本のセットアップ
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userName"></param>
+        /// <param name="userImageURL"></param>
+        /// <param name="text"></param>
+        /// <param name="statusId"></param>
+        /// <param name="isFavorite"></param>
+        private void SetBaseStatus(string id, string userName, string userImageURL, string text, long statusId, bool isFavorite)
         {
-            ViewModel = tweetViewModel;
             UserID = id;
             UserName = userName;
             UserImageURL = userImageURL;
@@ -130,37 +156,19 @@ namespace SUUUM_CLIENT.Item
             );
         }
 
+        /// <summary>
+        /// メディアのセットアップ
+        /// </summary>
+        /// <param name="imageUrl1"></param>
+        /// <param name="imageUrl2"></param>
+        /// <param name="imageUrl3"></param>
+        /// <param name="imageUrl4"></param>
         private void SetMediaStatus(string imageUrl1, string imageUrl2, string imageUrl3, string imageUrl4)
         {
             ImageURL1 = imageUrl1;
             ImageURL2 = imageUrl2;
             ImageURL3 = imageUrl3;
             ImageURL4 = imageUrl4;
-
-            ShowImage1 = new DelegateCommand(() =>
-            {
-                ViewModel.PublishEvent(new ImageInformation { ImageUrl = ImageURL1 });
-            },
-           () => true);
-
-            ShowImage2 = new DelegateCommand(() =>
-            {
-                ViewModel.PublishEvent(new ImageInformation { ImageUrl = ImageURL2 });
-            },
-           () => true);
-
-            ShowImage3 = new DelegateCommand(() =>
-            {
-                ViewModel.PublishEvent(new ImageInformation { ImageUrl = ImageURL3 });
-            },
-           () => true);
-
-            ShowImage4 = new DelegateCommand(() =>
-            {
-                ViewModel.PublishEvent(new ImageInformation { ImageUrl = ImageURL4 });
-            },
-           () => true);
-
         }
     }
 }

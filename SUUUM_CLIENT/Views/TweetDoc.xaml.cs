@@ -9,13 +9,12 @@ namespace SUUUM_CLIENT.Views
     public partial class TweetDoc : UserControl
     {
 
-        private TweetDocViewModel  ViewModel;
+        private TweetDocViewModel ViewModel;
         public TweetDoc()
         {
             InitializeComponent();
             ViewModel = (TweetDocViewModel)this.DataContext;
             ViewModel.View = this;
-
         }
     }
 }

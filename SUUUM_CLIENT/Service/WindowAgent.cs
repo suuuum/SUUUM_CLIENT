@@ -12,10 +12,19 @@ using WebBrowser = SUUUM_CLIENT.Views.WebBrowser;
 
 namespace SUUUM_CLIENT.Service
 {
+    /// <summary>
+    /// ウィンドウ管理用のクラス
+    /// </summary>
     public class WindowAgent
     {
+        /// <summary>
+        /// メインウィンドウ
+        /// </summary>
         public static MainWindow MainWindow { get; set; }
 
+        /// <summary>
+        /// 設定されている各ウィンドウIDの最大値(ウィンドウが追加されると増える)
+        /// </summary>
         private long TweetDocIdMax { get; set; } = 1;
 
         private long BrowserIdMax { get; set; } = 1;
@@ -54,8 +63,6 @@ namespace SUUUM_CLIENT.Service
             AddDocument<WebBrowser>(newBrowserDocLayout);
         }
 
-
-
         /// <summary>
         /// TweetImageBrowser画面をメインウインドウに追加します。
         /// </summary>
@@ -63,11 +70,8 @@ namespace SUUUM_CLIENT.Service
         {
             var newImageDocLayout = new LayoutDocument { Title = "ImageViewer", ContentId = "ImageViewer" + (BrowserIdMax + 1), Content = new TweetImageViewer() };
             BrowserIdMax++;
-            //((TweetImageViewerViewModel)((TweetImageViewer)newImageDocLayout.Content).DataContext).Id = newImageDocLayout.ContentId;
             AddDocument<TweetImageViewer>(newImageDocLayout);
         }
-
-
 
         /// <summary>
         /// 画面をメインウインドウに追加します
@@ -99,7 +103,6 @@ namespace SUUUM_CLIENT.Service
             MainWindow.LayoutPanel.Children.Add(newDocpane);
         }
 
-
         /// <summary>
         /// タイトルを設定します。
         /// </summary>
@@ -112,7 +115,7 @@ namespace SUUUM_CLIENT.Service
 
             foreach (var item in docPanels)
             {
-                LayoutContent layout = SearchContent<T>(contentId,title,item);
+                LayoutContent layout = SearchContent<T>(contentId, title, item);
 
                 if (layout != null)
                 {
@@ -122,35 +125,37 @@ namespace SUUUM_CLIENT.Service
             }
         }
 
+        /// <summary>
+        /// レイアウトコンテンツを再帰的に検索します。
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="contentId"></param>
+        /// <param name="title"></param>
+        /// <param name="element"></param>
+        /// <returns></returns>
         private LayoutContent SearchContent<T>(string contentId, string title, ILayoutElement element)
         {
             LayoutContent layout = null;
-            if (element is LayoutDocumentPane)
+            if (element is LayoutDocumentPane pane)
             {
-                layout = ((LayoutDocumentPane)element).Children.
+                layout = pane.Children.
                FirstOrDefault(target => target.Content.GetType() == typeof(T) && target.ContentId == contentId);
 
             }
 
             //再帰関数にする
-            if (element is LayoutDocumentPaneGroup)
+            if (element is LayoutDocumentPaneGroup group)
             {
-
-                var layouts = ((LayoutDocumentPaneGroup)element).Children;
+                var layouts = group.Children;
                 foreach (var content in layouts)
                 {
                     layout = SearchContent<T>(contentId, title, content);
 
                 }
-
             }
 
             return layout;
 
         }
-
-
-
-
     }
 }

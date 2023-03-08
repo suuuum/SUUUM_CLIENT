@@ -1,4 +1,7 @@
-﻿using SUUUM_CLIENT.ViewModels;
+﻿using SUUUM_CLIENT.Item;
+using SUUUM_CLIENT.ViewModels;
+using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,19 +18,32 @@ namespace SUUUM_CLIENT.Views
             InitializeComponent();
         }
 
-        //public static readonly DependencyProperty TextProperty = DependencyProperty.Register("TweetText", typeof(string), typeof(TweetControl), new FrameworkPropertyMetadata("TweetText"));
-        //public string TweetText
-        //{
-        //    get { return (string)GetValue(TextProperty); }
-        //    set { SetValue(TextProperty, value); }
-        //}
+        public ObservableCollection<Tweet> ExtraColumns
+        {
+            get { return (ObservableCollection<Tweet>)GetValue(ExtraColumnsProperty); }
+            set { SetValue(ExtraColumnsProperty, value); }
+        }
 
-        //public static readonly DependencyProperty ImageURLProperty = DependencyProperty.Register("TweetImageURL", typeof(string), typeof(TweetControl), new FrameworkPropertyMetadata("ImageURL"));
-        //public string TweetImageURL
-        //{
-        //    get { return (string)GetValue(ImageURLProperty); }
-        //    set { SetValue(ImageURLProperty, value); }
-        //}
+        public static readonly DependencyProperty ExtraColumnsProperty =
+            DependencyProperty.Register("ExtraColumns", typeof(ObservableCollection<Tweet>), typeof(TimeLineControl),
+                                        new PropertyMetadata(new ObservableCollection<Tweet>(), OnChanged));
+
+        static void OnChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            (sender as TimeLineControl).OnChanged();
+
+        }
+
+        void OnChanged()
+        {
+            if (ExtraColumns != null)
+                ExtraColumns.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(ExtraColumns_CollectionChanged);
+        }
+
+        void ExtraColumns_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            // Method intentionally left empty.
+        }
     }
 
 }

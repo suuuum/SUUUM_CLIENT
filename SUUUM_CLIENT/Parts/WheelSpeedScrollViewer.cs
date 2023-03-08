@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace SUUUM_CLIENT.Parts
 {
+    /// <summary>
+    /// スクロール加速したビューワー
+    /// </summary>
     public class WheelSpeedScrollViewer : ScrollViewer
     {
         public static readonly DependencyProperty SpeedFactorProperty =

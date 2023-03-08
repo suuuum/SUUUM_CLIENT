@@ -44,7 +44,7 @@
         </StackPanel>
         <parts:WheelSpeedScrollViewer Grid.Row="1">
             <StackPanel>
-                <local:TimeLineControl DataContext="{Binding Items, Mode=TwoWay}" />
+                <local:TimeLineControl ExtraColumns="{Binding DataContext.Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TweetDoc}}}" />
                 <Button Content="tuika"
                         Command="{Binding AddTweets}" />
             </StackPanel>

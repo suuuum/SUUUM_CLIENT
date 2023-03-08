@@ -207,8 +207,6 @@
   <ItemGroup>
     <Resource Include="Icon\リロードアイコン_ON.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Event\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

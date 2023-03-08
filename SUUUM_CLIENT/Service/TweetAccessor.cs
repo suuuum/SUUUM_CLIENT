@@ -15,7 +15,7 @@ namespace SUUUM_CLIENT.Service
     public class TweetAccessor
     {
         /// <summary>アクセストークン</summary>
-        internal static Tokens AccessToken;
+        internal static Tokens AccessToken { get; private set; }
         /// <summary>
         /// 認証セッション
         /// </summary>
@@ -26,7 +26,7 @@ namespace SUUUM_CLIENT.Service
         public TweetDocViewModel ViewModel { get; set; }
 
 
-        public static TweetAccessor Instance = new TweetAccessor();
+        public readonly static TweetAccessor Instance = new TweetAccessor();
 
         /// <summary>
         /// ホームタイムラインを取得します。
@@ -68,19 +68,19 @@ namespace SUUUM_CLIENT.Service
                 switch (tweet.ExtendedEntities?.Media?.Length ?? 0)
                 {
                     case 1:
-                        TimeLine.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, null, null, null, statusId, isFavorite));
+                        TimeLine.Add(new Tweet(tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, null, null, null, statusId, isFavorite));
                         break;
                     case 2:
-                        TimeLine.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, null, null, statusId, isFavorite));
+                        TimeLine.Add(new Tweet(tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, null, null, statusId, isFavorite));
                         break;
                     case 3:
-                        TimeLine.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl, null, statusId, isFavorite));
+                        TimeLine.Add(new Tweet(tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl, null, statusId, isFavorite));
                         break;
                     case 4:
-                        TimeLine.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl, tweet.ExtendedEntities.Media[3].MediaUrl, statusId, isFavorite));
+                        TimeLine.Add(new Tweet(tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl, tweet.ExtendedEntities.Media[3].MediaUrl, statusId, isFavorite));
                         break;
                     default:
-                        TimeLine.Add(new Tweet(ViewModel, tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, statusId, isFavorite));
+                        TimeLine.Add(new Tweet(tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, statusId, isFavorite));
                         break;
                 }
             }

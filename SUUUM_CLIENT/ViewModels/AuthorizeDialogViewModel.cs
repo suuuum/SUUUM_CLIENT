@@ -20,28 +20,27 @@ namespace SUUUM_CLIENT.ViewModels
             this.OkCommand = new DelegateCommand(this.Ok);
         }
        
-
         public void Ok()
         {
             var dialogParameters = new DialogParameters();
             dialogParameters.Add("Authorize",Message);
             this.RequestClose.Invoke(new DialogResult(ButtonResult.OK,dialogParameters));
         }
-
        
-
-        // ↓ IDialogAware の実装
-
         public string Title => "認証ダイアログ";
 
         public event Action<IDialogResult> RequestClose;
 
         public bool CanCloseDialog() => true;
 
-        public void OnDialogClosed() { }
+        public void OnDialogClosed()
+        {
+            // Method intentionally left empty.
+        }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
+            // Method intentionally left empty.
         }
     }
 }

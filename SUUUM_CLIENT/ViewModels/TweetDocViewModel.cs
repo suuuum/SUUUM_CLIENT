@@ -22,7 +22,7 @@ namespace SUUUM_CLIENT.ViewModels
 
         private readonly WindowAgent Agent;
 
-        public static TweetList Home = new TweetList(0, "ホーム");
+        public static readonly TweetList Home = new TweetList(0, "ホーム");
 
         public TweetDoc View { get; set; }
 
@@ -95,9 +95,7 @@ namespace SUUUM_CLIENT.ViewModels
         }
         private TweetList _selectedItem;
 
-        private readonly IEventAggregator _eventAggregator;
-
-
+        public ObservableCollection<Tweet> Items { get; set; }
 
 
         public TweetDocViewModel(IEventAggregator eventAggregator, TweetAccessor accessor, IDialogService dialog, WindowAgent agent)
@@ -108,7 +106,6 @@ namespace SUUUM_CLIENT.ViewModels
             OnModeVisibility = Visibility.Collapsed;
             OffModeVisibility = Visibility.Visible;
             bool isSetUp = false;
-            _eventAggregator = eventAggregator;
             while (!TweetAccessor.IsAuthorized)
             {
                 try
@@ -182,7 +179,7 @@ namespace SUUUM_CLIENT.ViewModels
         }
 
 
-        public ObservableCollection<Tweet> Items { get; set; }
+       
 
         private void Reload()
         {
@@ -211,14 +208,8 @@ namespace SUUUM_CLIENT.ViewModels
             }
         }
 
-        public void PublishEvent(ImageInformation imageInfo)
-        {
-            _eventAggregator.GetEvent<ShowImageEvent<ImageInformation>>().Publish(imageInfo);
-        }
+        
     }
 
-    public class ShowImageEvent<ImageInformation> : PubSubEvent<ImageInformation>
-    {
-
-    }
+   
 }

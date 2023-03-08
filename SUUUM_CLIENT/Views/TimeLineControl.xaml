@@ -4,6 +4,7 @@
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:local="clr-namespace:SUUUM_CLIENT.Views"
+             xmlns:vm="clr-namespace:SUUUM_CLIENT.ViewModels"
              xmlns:root="SUUUM_CLIENT.Views.tweet"
              xmlns:item="clr-namespace:SUUUM_CLIENT.Item"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
@@ -14,7 +15,7 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolVisibilityConverter" />
     </UserControl.Resources>
-    <ItemsControl ItemsSource="{Binding DataContext, ElementName=root,Mode=TwoWay}">
+    <ItemsControl ItemsSource="{Binding ExtraColumns, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:TimeLineControl}}}">
         <ItemsControl.ItemTemplate>
             <DataTemplate  DataType="{x:Type item:Tweet}">
                 <Border BorderThickness="2"
@@ -89,7 +90,8 @@
                                                    Visibility="{Binding HaveMedia1,Converter={StaticResource BoolVisibilityConverter}}">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                        <prism:InvokeCommandAction Command="{Binding ShowImage1}" />
+                                                        <prism:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type UserControl}},Path=DataContext.ShowImage}"
+                                                                                   CommandParameter="{Binding ImageURL1}" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                             </Image>
@@ -100,7 +102,8 @@
                                                    Visibility="{Binding HaveMedia2,Converter={StaticResource BoolVisibilityConverter}}">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                        <prism:InvokeCommandAction Command="{Binding ShowImage2}" />
+                                                        <prism:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type UserControl}},Path=DataContext.ShowImage}"
+                                                                                   CommandParameter="{Binding ImageURL2}" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                             </Image>
@@ -116,7 +119,8 @@
                                                    Visibility="{Binding HaveMedia3,Converter={StaticResource BoolVisibilityConverter}}">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                        <prism:InvokeCommandAction Command="{Binding ShowImage3}" />
+                                                        <prism:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type UserControl}},Path=DataContext.ShowImage}"
+                                                                                   CommandParameter="{Binding ImageURL3}" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                             </Image>
@@ -127,7 +131,8 @@
                                                    Visibility="{Binding HaveMedia4,Converter={StaticResource BoolVisibilityConverter}}">
                                                 <i:Interaction.Triggers>
                                                     <i:EventTrigger EventName="MouseLeftButtonDown">
-                                                        <prism:InvokeCommandAction Command="{Binding ShowImage4}" />
+                                                        <prism:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type UserControl}},Path=DataContext.ShowImage}"
+                                                                                   CommandParameter="{Binding ImageURL4}" />
                                                     </i:EventTrigger>
                                                 </i:Interaction.Triggers>
                                             </Image>
@@ -160,8 +165,7 @@
                                        HorizontalAlignment="Right"
                                        Margin="5"
                                        Visibility="{Binding FavoriteVisibility}"
-                                       Cursor="Hand"
-                                       >
+                                       Cursor="Hand">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonDown">
                                             <prism:InvokeCommandAction Command="{Binding RemoveFavorite}" />

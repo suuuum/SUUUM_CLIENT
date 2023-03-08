@@ -11,7 +11,7 @@ namespace SUUUM_CLIENT.Views
     /// </summary>
     public partial class WebBrowser : UserControl
     {
-        public WebBrowserViewModel VM;
+        private WebBrowserViewModel VM;
 
         public WebBrowser()
         {
