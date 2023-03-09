@@ -62,27 +62,7 @@ namespace SUUUM_CLIENT.Service
             foreach (var value in tl)
             {
                 var tweet = value.RetweetedStatus ?? value;
-                var isFavorite = tweet.IsFavorited ?? false;
-
-                var statusId = tweet.Id;
-                switch (tweet.ExtendedEntities?.Media?.Length ?? 0)
-                {
-                    case 1:
-                        TimeLine.Add(new Tweet(tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, null, null, null, statusId, isFavorite));
-                        break;
-                    case 2:
-                        TimeLine.Add(new Tweet(tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, null, null, statusId, isFavorite));
-                        break;
-                    case 3:
-                        TimeLine.Add(new Tweet(tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl, null, statusId, isFavorite));
-                        break;
-                    case 4:
-                        TimeLine.Add(new Tweet(tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, tweet.ExtendedEntities.Media[0].MediaUrl, tweet.ExtendedEntities.Media[1].MediaUrl, tweet.ExtendedEntities.Media[2].MediaUrl, tweet.ExtendedEntities.Media[3].MediaUrl, statusId, isFavorite));
-                        break;
-                    default:
-                        TimeLine.Add(new Tweet(tweet.User.ScreenName, tweet.User.Name, tweet.User.ProfileImageUrl, tweet.Text, statusId, isFavorite));
-                        break;
-                }
+                TimeLine.Add(new Tweet(tweet));
             }
 
             return TimeLine;

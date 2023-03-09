@@ -34,7 +34,5 @@ namespace SUUUM_CLIENT.ViewModels
     }
     public class ShowImageEvent<ImageInformation> : PubSubEvent<ImageInformation>
     {
-
-
     }
 }

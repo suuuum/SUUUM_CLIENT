@@ -4,9 +4,10 @@
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-        <Image Source="{Binding ShowImageURL}"
+        <MediaElement Source="{Binding ShowImageURL}"
                Cursor="Hand"
                HorizontalAlignment="Stretch"
-               VerticalAlignment="Stretch" />
+               VerticalAlignment="Stretch"
+               />
     </Grid>
 </UserControl>

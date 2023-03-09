@@ -1,4 +1,5 @@
-﻿using Prism.Commands;
+﻿using CoreTweet;
+using Prism.Commands;
 using Prism.Mvvm;
 using SUUUM_CLIENT.Service;
 using SUUUM_CLIENT.ViewModels;
@@ -92,31 +93,39 @@ namespace SUUUM_CLIENT.Item
         /// </summary>
         public DelegateCommand RemoveFavorite { get; set; }
 
+       
         /// <summary>
-        /// mediaがある場合
+        /// コンストラクタです。
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="userName"></param>
-        /// <param name="userImageURL"></param>
-        /// <param name="text"></param>
-        /// <param name="imageUrl"></param>
-        public Tweet(string id, string userName, string userImageURL, string text, string imageUrl1, string imageUrl2, string imageUrl3, string imageUrl4, long statusId, bool isFavorite)
+        /// <param name="status"></param>
+        public Tweet(Status status)
         {
-            SetBaseStatus(id, userName, userImageURL, text, statusId, isFavorite);
-            SetMediaStatus(imageUrl1, imageUrl2, imageUrl3, imageUrl4);
-        }
+            SetBaseStatus(status.User.ScreenName, status.User.Name, status.User.ProfileImageUrl, status.Text, status.Id, status.IsFavorited ?? false);
 
-        /// <summary>
-        /// mediaがない場合
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="userName"></param>
-        /// <param name="userImageURL"></param>
-        /// <param name="text"></param>
-        /// <param name="imageUrl"></param>
-        public Tweet(string id, string userName, string userImageURL, string text, long statusId, bool isFavorite)
-        {
-            SetBaseStatus(id, userName, userImageURL, text, statusId, isFavorite);
+            if (status.ExtendedEntities?.Media?.Length > 0)
+            {
+                ImageURL1 = status.ExtendedEntities.Media[0].MediaUrl;
+                Text = Text.Replace(status.ExtendedEntities.Media[0].Url,"");
+            }
+            if(status.ExtendedEntities?.Media?.Length > 1)
+            {
+                ImageURL2 = status.ExtendedEntities.Media[1].MediaUrl;
+                Text = Text.Replace(status.ExtendedEntities.Media[1].Url, "");
+            }
+            if (status.ExtendedEntities?.Media?.Length > 2)
+            {
+                ImageURL3 = status.ExtendedEntities.Media[2].MediaUrl;
+                Text = Text.Replace(status.ExtendedEntities.Media[2].Url, "");
+            }
+            if (status.ExtendedEntities?.Media?.Length > 3)
+            {
+                ImageURL4 = status.ExtendedEntities.Media[3].MediaUrl;
+                Text = Text.Replace(status.ExtendedEntities.Media[3].Url, "");
+            }
+
+            //TODO Urlはこんな感じでとれるので、これをもとにhyperlinkを作る
+            if (status.Entities?.Urls?.Length > 0)
+                Text = Text.Replace(status.Entities?.Urls[0].Url, "testUrlReplace");
         }
 
         /// <summary>
@@ -141,6 +150,8 @@ namespace SUUUM_CLIENT.Item
             else
                 FavoriteVisibility = Visibility.Collapsed;
 
+
+            //TODO TimeLineControlに移したい気がする
             AddFavorite = new DelegateCommand(() =>
                 {
                     TweetAccessor.Instance.AddFavorid(statusId);
@@ -154,21 +165,6 @@ namespace SUUUM_CLIENT.Item
                     IsFavorite = false;
                 }
             );
-        }
-
-        /// <summary>
-        /// メディアのセットアップ
-        /// </summary>
-        /// <param name="imageUrl1"></param>
-        /// <param name="imageUrl2"></param>
-        /// <param name="imageUrl3"></param>
-        /// <param name="imageUrl4"></param>
-        private void SetMediaStatus(string imageUrl1, string imageUrl2, string imageUrl3, string imageUrl4)
-        {
-            ImageURL1 = imageUrl1;
-            ImageURL2 = imageUrl2;
-            ImageURL3 = imageUrl3;
-            ImageURL4 = imageUrl4;
         }
     }
 }
