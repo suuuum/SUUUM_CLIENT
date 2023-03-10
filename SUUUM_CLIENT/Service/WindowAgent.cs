@@ -64,6 +64,19 @@ namespace SUUUM_CLIENT.Service
         }
 
         /// <summary>
+        /// WebBrowser画面をメインウインドウに追加します。
+        /// </summary>
+        public void AddWebBrouserDoc(string url)
+        {
+
+            var newBrowserDocLayout = new LayoutDocument { Title = "Browser", ContentId = "Browser" + (BrowserIdMax + 1), Content = new WebBrowser() };
+            BrowserIdMax++;
+            ((WebBrowserViewModel)((WebBrowser)newBrowserDocLayout.Content).DataContext).Id = newBrowserDocLayout.ContentId;
+            ((WebBrowser)newBrowserDocLayout.Content).OpenUrl(url);
+            AddDocument<WebBrowser>(newBrowserDocLayout);
+        }
+
+        /// <summary>
         /// TweetImageBrowser画面をメインウインドウに追加します。
         /// </summary>
         public void AddImageViewerDoc()
@@ -91,8 +104,10 @@ namespace SUUUM_CLIENT.Service
 
                 if (layout != null)
                 {
-
-                    ((LayoutDocumentPane)item).Children.Add(docLayout);
+                    var layoutDocPane = (LayoutDocumentPane)item;
+                    layoutDocPane.Children.Add(docLayout);
+                    //追加した画面にフォーカスする
+                    layoutDocPane.SelectedContentIndex = layoutDocPane.Children.Count - 1;
                     return;
                 }
 
@@ -101,6 +116,8 @@ namespace SUUUM_CLIENT.Service
             var newDocpane = new LayoutDocumentPane();
             newDocpane.Children.Add(docLayout);
             MainWindow.LayoutPanel.Children.Add(newDocpane);
+            //追加した画面にフォーカスする
+            newDocpane.SelectedContentIndex = newDocpane.Children.Count - 1;
         }
 
         /// <summary>

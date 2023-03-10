@@ -34,7 +34,14 @@ namespace SUUUM_CLIENT.Views
             addressBar.Text = uri;
             webView.CoreWebView2.PostWebMessageAsString(uri);
         }
-        
+
+        public void OpenUrl(string url)
+        {
+            addressBar.Text = url;
+            VM.DisplayURL = addressBar.Text;
+            VM.MoveURLCommand();
+        }
+
         private void ReloadButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             webView.Reload();

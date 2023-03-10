@@ -61,6 +61,23 @@
                             <TextBlock Text="{Binding Text}"
                                        TextWrapping="Wrap"
                                        Foreground="MintCream" />
+                            <ItemsControl ItemsSource="{Binding UrlCollection}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate  DataType="{x:Type item:UrlInformation}">
+                                        <Grid>
+                                            <TextBlock Text="{Binding DisplayText}"
+                                                       Cursor="Hand"
+                                                       TextWrapping="Wrap"
+                                                       Foreground="Aqua"> <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                        <prism:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type UserControl}},Path=DataContext.ClickLink}"
+                                                                                   CommandParameter="{Binding Url}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers></TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                             <!--TweetMedia-->
                             <Viewbox Stretch="Uniform">
                                 <Grid>

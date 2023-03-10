@@ -3,10 +3,11 @@ using Prism.Commands;
 using Prism.Mvvm;
 using SUUUM_CLIENT.Service;
 using SUUUM_CLIENT.ViewModels;
+using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace SUUUM_CLIENT.Item
-{   
+{
     /// <summary>
     /// Tweetのモデルクラスです。
     /// </summary>
@@ -93,7 +94,9 @@ namespace SUUUM_CLIENT.Item
         /// </summary>
         public DelegateCommand RemoveFavorite { get; set; }
 
-       
+        public ObservableCollection<UrlInformation> UrlCollection { get; set; } = new ObservableCollection<UrlInformation>();
+
+
         /// <summary>
         /// コンストラクタです。
         /// </summary>
@@ -105,9 +108,9 @@ namespace SUUUM_CLIENT.Item
             if (status.ExtendedEntities?.Media?.Length > 0)
             {
                 ImageURL1 = status.ExtendedEntities.Media[0].MediaUrl;
-                Text = Text.Replace(status.ExtendedEntities.Media[0].Url,"");
+                Text = Text.Replace(status.ExtendedEntities.Media[0].Url, "");
             }
-            if(status.ExtendedEntities?.Media?.Length > 1)
+            if (status.ExtendedEntities?.Media?.Length > 1)
             {
                 ImageURL2 = status.ExtendedEntities.Media[1].MediaUrl;
                 Text = Text.Replace(status.ExtendedEntities.Media[1].Url, "");
@@ -123,9 +126,17 @@ namespace SUUUM_CLIENT.Item
                 Text = Text.Replace(status.ExtendedEntities.Media[3].Url, "");
             }
 
-            //TODO Urlはこんな感じでとれるので、これをもとにhyperlinkを作る
+            //TODO Urlはこんな感じでとれるので、これをもとにリンクを作る
+            //今は文末にくっつけてるが、文中に埋め込めるようにしたいところ
             if (status.Entities?.Urls?.Length > 0)
-                Text = Text.Replace(status.Entities?.Urls[0].Url, "testUrlReplace");
+            {
+                foreach (var url in status.Entities?.Urls)
+                {
+                    //使うurl合ってる？
+                    UrlCollection.Add(new UrlInformation(url.ExpandedUrl, url.Url));
+                    Text = Text.Replace(url.Url, "");
+                }
+            }
         }
 
         /// <summary>
@@ -151,7 +162,6 @@ namespace SUUUM_CLIENT.Item
                 FavoriteVisibility = Visibility.Collapsed;
 
 
-            //TODO TimeLineControlに移したい気がする
             AddFavorite = new DelegateCommand(() =>
                 {
                     TweetAccessor.Instance.AddFavorid(statusId);
@@ -165,6 +175,23 @@ namespace SUUUM_CLIENT.Item
                     IsFavorite = false;
                 }
             );
+        }
+    }
+
+    public class UrlInformation
+    {
+
+        public string Url { get; set; }
+        public string DisplayText { get; set; }
+
+        public UrlInformation()
+        {
+        }
+
+        public UrlInformation(string url, string displayText)
+        {
+            Url = url;
+            DisplayText = displayText;
         }
     }
 }

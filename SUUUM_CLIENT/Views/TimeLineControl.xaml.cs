@@ -44,6 +44,12 @@ namespace SUUUM_CLIENT.Views
         {
             // Method intentionally left empty.
         }
+
+
+        private void Hyperlink_RequestNavigate_1(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            System.Diagnostics.Process.Start(e.Uri.ToString());
+        }
     }
 
 }

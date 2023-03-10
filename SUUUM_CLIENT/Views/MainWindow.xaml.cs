@@ -15,10 +15,8 @@ namespace SUUUM_CLIENT.Views
         public MainWindow()
         {
             InitializeComponent();
-
             WindowAgent.MainWindow = this;
             LayoutPanel = MainPanel;
-            
         }
     }
 }
