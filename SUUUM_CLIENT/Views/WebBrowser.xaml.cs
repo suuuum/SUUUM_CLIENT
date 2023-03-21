@@ -18,6 +18,7 @@ namespace SUUUM_CLIENT.Views
             InitializeComponent();
             InitializeAsync();
             VM = this.DataContext as WebBrowserViewModel;
+            VM.View = this;
         }
 
         async void InitializeAsync()
@@ -53,6 +54,22 @@ namespace SUUUM_CLIENT.Views
             {
                 VM.DisplayURL =addressBar.Text;
                 VM.MoveURLCommand();
+            }
+        }
+
+        internal void GoBack()
+        {
+            if (webView.CanGoBack)
+            {
+                webView.GoBack();
+            }
+        }
+
+        internal void GoForward()
+        {
+            if (webView.CanGoForward)
+            {
+                webView.GoForward();
             }
         }
     }

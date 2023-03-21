@@ -18,10 +18,12 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0">
+            <Button Grid.Column="0"
+                    Command="{Binding GoBackCommand}">
                 <Image Source="pack://application:,,,/Icon/矢印アイコン左.png" />
             </Button>
-            <Button Grid.Column="1">
+            <Button Grid.Column="1"
+                    Command="{Binding GoForwardCommand}">
                 <Image Source="pack://application:,,,/Icon/矢印アイコン右.png" />
             </Button>
             <Button Grid.Column="2"

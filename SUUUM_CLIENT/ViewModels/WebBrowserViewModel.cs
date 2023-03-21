@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using SUUUM_CLIENT.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace SUUUM_CLIENT.ViewModels
     public class WebBrowserViewModel : BindableBase
     {
         private const string HomeURL = "https://www.google.com/?hl=ja";
+
+        public WebBrowser View { get; set; }
 
         public string Id
         {
@@ -33,10 +36,24 @@ namespace SUUUM_CLIENT.ViewModels
 
         public DelegateCommand MoveURL { get; set; }
 
+        public DelegateCommand GoBackCommand { get; set; }
+
+        public DelegateCommand GoForwardCommand { get; set; }
+
+
+
         public WebBrowserViewModel()
         {
             MoveURL = new DelegateCommand(() =>
             MoveURLCommand(),
+           () => true);
+
+            GoBackCommand = new DelegateCommand(() =>
+            View.GoBack(),
+           () => true);
+
+            GoForwardCommand = new DelegateCommand(() =>
+             View.GoForward(),
            () => true);
         }
 
